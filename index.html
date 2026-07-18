@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Gere jogos aleatórios (surpresinhas) para todas as loterias oficiais da Caixa. Mega-Sena, Lotofácil, Quina e mais!">
+  <title>LotoGênio - Gerador de Loterias Caixa</title>
+  
+  <!-- Fontes Premium -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Ícones -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Efeitos de Fundo Decorativos -->
+  <div class="bg-blur blur-1"></div>
+  <div class="bg-blur blur-2"></div>
+
+  <div class="app-container">
+    <header class="app-header">
+      <div class="logo">
+        <i class="fa-solid fa-clover brand-icon"></i>
+        <h1>Loto<span>Gênio</span></h1>
+      </div>
+      <p class="tagline">Gere surpresinhas profissionais de forma simples e rápida</p>
+    </header>
+
+    <!-- Barra de Etapas (Wizard Progress) -->
+    <div class="wizard-steps" id="wizardSteps">
+      <div class="step active" data-step="1" id="stepIndicator-1">
+        <div class="step-num">1</div>
+        <span class="step-text">Escolher Loteria</span>
+      </div>
+      <div class="step-connector" id="connector-1"></div>
+      <div class="step" data-step="2" id="stepIndicator-2">
+        <div class="step-num">2</div>
+        <span class="step-text">Configurar Aposta</span>
+      </div>
+      <div class="step-connector" id="connector-2"></div>
+      <div class="step" data-step="3" id="stepIndicator-3">
+        <div class="step-num">3</div>
+        <span class="step-text">Ver Resultados</span>
+      </div>
+    </div>
+
+    <!-- Container das Etapas (Wizard Screens) -->
+    <main class="wizard-content card">
+      
+      <!-- ETAPA 1: Seleção da Loteria -->
+      <section id="step-1" class="wizard-pane active">
+        <h2 class="section-title">Qual loteria deseja jogar hoje?</h2>
+        <p class="section-desc">Selecione uma das modalidades oficiais da Caixa abaixo para iniciar.</p>
+        
+        <div class="lottery-grid" id="lotteryGrid">
+          <!-- Gerado dinamicamente via JS -->
+        </div>
+      </section>
+
+      <!-- ETAPA 2: Configuração da Aposta -->
+      <section id="step-2" class="wizard-pane">
+        <div class="pane-header">
+          <button class="btn-back" id="btnBackToStep1">
+            <i class="fa-solid fa-arrow-left"></i> Voltar
+          </button>
+          <div class="lottery-badge" id="selectedLotteryBadge">
+            Mega-Sena
+          </div>
+        </div>
+
+        <h2 class="section-title">Configure o seu jogo</h2>
+        <p class="section-desc">Ajuste os parâmetros abaixo para gerar suas surpresinhas.</p>
+
+        <div class="config-form">
+          <div class="form-group">
+            <label for="numDezenas">
+              <span>Quantidade de dezenas</span>
+              <span class="tooltip">
+                <i class="fa-solid fa-circle-info"></i>
+                <span class="tooltiptext">Defina quantos números serão marcados no mesmo bilhete.</span>
+              </span>
+            </label>
+            <div class="number-selector">
+              <button type="button" class="btn-spin" id="btnDecDezenas">-</button>
+              <input type="number" id="numDezenas" readonly value="6">
+              <button type="button" class="btn-spin" id="btnIncDezenas">+</button>
+            </div>
+            <span class="range-info" id="dezenasRangeInfo">Permitido de 6 a 20 dezenas</span>
+          </div>
+
+          <div class="form-group">
+            <label for="numCartoes">
+              <span>Quantidade de cartões (jogos)</span>
+              <span class="tooltip">
+                <i class="fa-solid fa-circle-info"></i>
+                <span class="tooltiptext">Escolha quantos jogos independentes você quer gerar de uma vez.</span>
+              </span>
+            </label>
+            <div class="number-selector">
+              <button type="button" class="btn-spin" id="btnDecCartoes">-</button>
+              <input type="number" id="numCartoes" readonly value="1">
+              <button type="button" class="btn-spin" id="btnIncCartoes">+</button>
+            </div>
+            <span class="range-info">Gere até 10 cartões por vez</span>
+          </div>
+
+          <button class="btn-primary btn-large btn-generate" id="btnGenerateGames">
+            <span>Gerar Jogos</span>
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+          </button>
+        </div>
+      </section>
+
+      <!-- ETAPA 3: Exibição dos Resultados -->
+      <section id="step-3" class="wizard-pane">
+        <div class="pane-header">
+          <button class="btn-back" id="btnBackToStep2">
+            <i class="fa-solid fa-arrow-left"></i> Configurar
+          </button>
+          <div class="lottery-badge" id="resultLotteryBadge">
+            Mega-Sena
+          </div>
+        </div>
+
+        <h2 class="section-title">Seus jogos da sorte!</h2>
+        <p class="section-desc">Confira os jogos gerados com estatísticas exclusivas de soma e paridade.</p>
+
+        <!-- Container de Cartões Gerados -->
+        <div class="games-container" id="gamesContainer">
+          <!-- Gerado dinamicamente via JS -->
+        </div>
+
+        <!-- Ações do Resultado -->
+        <div class="actions-container">
+          <button class="btn-secondary" id="btnCopyAll">
+            <i class="fa-solid fa-copy"></i> Copiar Todos
+          </button>
+          <button class="btn-secondary" id="btnRegenerate">
+            <i class="fa-solid fa-rotate-right"></i> Gerar Novamente
+          </button>
+          <button class="btn-primary" id="btnStartOver">
+            Nova Loteria <i class="fa-solid fa-house"></i>
+          </button>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="app-footer">
+      <p>Desenvolvido com carinho para apostadores inteligentes. Boa sorte! 🍀</p>
+      <p class="disclaimer">Aviso: Este site gera palpites aleatórios baseados em probabilidade. Não temos ligação com a Caixa Econômica Federal e não realizamos apostas.</p>
+    </footer>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
