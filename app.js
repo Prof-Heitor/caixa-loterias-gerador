@@ -470,8 +470,6 @@ function updateThemeIcon(isLight) {
  * Exibe o aviso sobre vício em jogos se ainda não tiver sido aceito na sessão
  */
 function showResponsibleGamingModal() {
-  if (!sessionStorage.getItem("gamingAlertAccepted")) {
-    elements.responsibleGamingModal.classList.add("active");
-  }
+  elements.responsibleGamingModal.classList.add("active");
 }
 
