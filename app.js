@@ -43,11 +43,18 @@ const elements = {
   btnRegenerate: document.getElementById("btnRegenerate"),
   
   // Resultados Step 3
-  gamesContainer: document.getElementById("gamesContainer")
+  gamesContainer: document.getElementById("gamesContainer"),
+
+  // Tema e Modal
+  themeToggle: document.getElementById("themeToggle"),
+  responsibleGamingModal: document.getElementById("responsibleGamingModal"),
+  btnCloseModal: document.getElementById("btnCloseModal")
 };
 
 // Inicialização da Página
 document.addEventListener("DOMContentLoaded", () => {
+  initTheme();
+  showResponsibleGamingModal();
   renderLotteryGrid();
   setupEventListeners();
   updateWizardProgress();
@@ -134,6 +141,17 @@ function setupEventListeners() {
   // Copiar Todos os Jogos
   elements.btnCopyAll.addEventListener("click", () => {
     copyAllToClipboard();
+  });
+
+  // Alternar Tema
+  elements.themeToggle.addEventListener("click", () => {
+    toggleTheme();
+  });
+
+  // Fechar Modal de Jogo Responsável
+  elements.btnCloseModal.addEventListener("click", () => {
+    elements.responsibleGamingModal.classList.remove("active");
+    sessionStorage.setItem("gamingAlertAccepted", "true");
   });
 }
 
@@ -410,3 +428,50 @@ function copyAllToClipboard() {
     console.error("Erro ao copiar", err);
   });
 }
+
+/**
+ * Inicializa o tema (escuro ou claro) com base nas preferências salvas ou do sistema
+ */
+function initTheme() {
+  const savedTheme = localStorage.getItem("theme");
+  const systemPrefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+
+  if (savedTheme === "light" || (!savedTheme && systemPrefersLight)) {
+    document.body.classList.add("light-theme");
+    updateThemeIcon(true);
+  } else {
+    updateThemeIcon(false);
+  }
+}
+
+/**
+ * Alterna entre modo claro e escuro
+ */
+function toggleTheme() {
+  const isLight = document.body.classList.toggle("light-theme");
+  localStorage.setItem("theme", isLight ? "light" : "dark");
+  updateThemeIcon(isLight);
+}
+
+/**
+ * Atualiza o ícone do botão de tema
+ * @param {boolean} isLight 
+ */
+function updateThemeIcon(isLight) {
+  const icon = elements.themeToggle.querySelector("i");
+  if (isLight) {
+    icon.className = "fa-solid fa-moon";
+  } else {
+    icon.className = "fa-solid fa-sun";
+  }
+}
+
+/**
+ * Exibe o aviso sobre vício em jogos se ainda não tiver sido aceito na sessão
+ */
+function showResponsibleGamingModal() {
+  if (!sessionStorage.getItem("gamingAlertAccepted")) {
+    elements.responsibleGamingModal.classList.add("active");
+  }
+}
+

@@ -23,9 +23,14 @@
 
   <div class="app-container">
     <header class="app-header">
-      <div class="logo">
-        <i class="fa-solid fa-clover brand-icon"></i>
-        <h1>Loto<span>Gênio</span></h1>
+      <div class="header-top">
+        <div class="logo">
+          <i class="fa-solid fa-clover brand-icon"></i>
+          <h1>Loto<span>Gênio</span></h1>
+        </div>
+        <button id="themeToggle" class="btn-theme-toggle" aria-label="Alternar Tema">
+          <i class="fa-solid fa-sun"></i>
+        </button>
       </div>
       <p class="tagline">Gere surpresinhas profissionais de forma simples e rápida</p>
     </header>
@@ -154,6 +159,19 @@
       <p>Desenvolvido com carinho para apostadores inteligentes. Boa sorte! 🍀</p>
       <p class="disclaimer">Aviso: Este site gera palpites aleatórios baseados em probabilidade. Não temos ligação com a Caixa Econômica Federal e não realizamos apostas.</p>
     </footer>
+  </div>
+
+  <!-- Modal de Alerta Jogo Responsável -->
+  <div class="modal-overlay" id="responsibleGamingModal">
+    <div class="modal-card">
+      <div class="modal-icon">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+      </div>
+      <h2>Jogo Responsável</h2>
+      <p>Este gerador de palpites é para fins de <strong>entretenimento</strong>. Lembre-se de que a loteria é um jogo de azar e não uma fonte de renda garantida.</p>
+      <p class="modal-alert-text"><strong>Atenção:</strong> Apostas podem causar dependência (vício). Jogue com moderação. Se você ou alguém que você conhece precisa de ajuda com jogos de azar, procure orientação profissional.</p>
+      <button class="btn-primary" id="btnCloseModal">Entendi e Aceito</button>
+    </div>
   </div>
 
   <script type="module" src="app.js"></script>
